@@ -1,13 +1,5 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   type ChartConfig,
   ChartContainer,
@@ -19,7 +11,6 @@ import {
 const generateChartData = () => {
   const data = [];
   const now = new Date();
-  // ایجاد داده برای ۳۰ دقیقه گذشته
   for (let i = 29; i >= 0; i--) {
     const time = new Date(now.getTime() - i * 60000); // کم کردن i دقیقه از زمان حال
     const formattedTime = time.toLocaleTimeString("fa-IR", {
@@ -35,8 +26,6 @@ const generateChartData = () => {
   return data;
 };
 
-const chartData = generateChartData();
-
 const chartConfig = {
   messages: {
     label: "پیام‌ها",
@@ -45,6 +34,18 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function TraficChart() {
+  const [chartData, setChartData] = useState(generateChartData());
+
+  useEffect(() => {
+    // هر ۱ دقیقه یک بار داده جدید تولید شود
+    const interval = setInterval(() => {
+      setChartData(generateChartData());
+    }, 60000);
+
+    // پاک‌سازی تایمر هنگام خروج از کامپوننت
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <ChartContainer
       config={chartConfig}
