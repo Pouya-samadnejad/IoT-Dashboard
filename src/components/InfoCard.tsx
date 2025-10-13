@@ -18,7 +18,7 @@ interface InfoCardProps {
   footer?: string;
   action?: ReactNode;
   online?: number;
-  valueColor?: "default" | "success" | "warning" | "error" | undefined;
+  valueColor?: string;
   style?: string;
 }
 
