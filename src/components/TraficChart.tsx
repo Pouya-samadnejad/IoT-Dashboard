@@ -7,12 +7,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-// تابع برای تولید داده‌های تصادفی برای ۳۰ دقیقه گذشته
 const generateChartData = () => {
   const data = [];
   const now = new Date();
   for (let i = 29; i >= 0; i--) {
-    const time = new Date(now.getTime() - i * 60000); // کم کردن i دقیقه از زمان حال
+    const time = new Date(now.getTime() - i * 60000);
     const formattedTime = time.toLocaleTimeString("fa-IR", {
       hour: "2-digit",
       minute: "2-digit",
@@ -20,7 +19,7 @@ const generateChartData = () => {
     });
     data.push({
       time: formattedTime,
-      messages: Math.floor(Math.random() * (200 - 50 + 1)) + 50, // عدد تصادفی بین ۵۰ و ۲۰۰
+      messages: Math.floor(Math.random() * (200 - 50 + 1)) + 50,
     });
   }
   return data;
@@ -37,12 +36,10 @@ export function TraficChart() {
   const [chartData, setChartData] = useState(generateChartData());
 
   useEffect(() => {
-    // هر ۱ دقیقه یک بار داده جدید تولید شود
     const interval = setInterval(() => {
       setChartData(generateChartData());
     }, 60000);
 
-    // پاک‌سازی تایمر هنگام خروج از کامپوننت
     return () => clearInterval(interval);
   }, []);
 

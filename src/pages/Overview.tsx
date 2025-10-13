@@ -1,4 +1,4 @@
-import OverviewCart from "@/components/OverviewCart";
+import InfoCard from "@/components/InfoCard";
 import { TempChart } from "@/components/TempChart";
 import { TraficChart } from "@/components/TraficChart";
 
@@ -6,22 +6,30 @@ export default function Overview() {
   return (
     <main className="flex gap-2">
       <div className="w-2/3">
-        <OverviewCart
+        <InfoCard
           title="تله متری محیط"
-          description="دما و رطوبت آخرین ۵۰ نمونه 
+          description="دما و رطوبت آخرین ۵۰ نمونه"
+          style="w-full"
+        >
+          <TempChart />
+        </InfoCard>
+        <InfoCard
+          title=" MQTT اتصال 
+ "
+          description="WebSocket حالت نمایشی
 "
         >
           <TempChart />
-        </OverviewCart>
+        </InfoCard>
       </div>
       <div className="w-1/3">
-        <OverviewCart
+        <InfoCard
           title="ترافیک شبکه"
           description="پیام دقیقه
 "
         >
           <TraficChart />
-        </OverviewCart>
+        </InfoCard>
       </div>
     </main>
   );

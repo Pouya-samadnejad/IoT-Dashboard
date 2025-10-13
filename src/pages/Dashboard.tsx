@@ -1,4 +1,4 @@
-import StatusCart from "@/components/StatusCart";
+import InfoCard from "@/components/InfoCard";
 import TabSection from "@/components/TabSection";
 import { BellDot, Gauge, Server, Wifi } from "lucide-react";
 
@@ -40,19 +40,22 @@ export default function Dashboard() {
   ];
   return (
     <main className="p-4">
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         {items.map((item) => (
-          <StatusCart
+          <InfoCard
             key={item.title}
             icon={<item.icon />}
             title={item.title}
-            value={item.value}
-            updated={item.updated}
             online={item.online}
             valueColor={item.valueColor}
-          />
+            footer={`به‌روزشده: ${item.updated}`}
+            style="w-60"
+          >
+            <div className="text-3xl font-bold">{item.value}</div>
+          </InfoCard>
         ))}
       </div>
+
       <TabSection />
     </main>
   );
