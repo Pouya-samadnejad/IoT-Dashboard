@@ -66,28 +66,27 @@ export default function Devices() {
     <main>
       <InfoCard
         title="فهرست دستگاه ها"
-        description="کنترل سريع و وضعیت سلامت"
+        description="کنترل سریع و وضعیت سلامت"
         action={
           <div className="md:flex gap-2 items-center">
-            <Button className="shadow">
+            <Button className="shadow flex items-center gap-1">
               از راه دور Provision <Earth />
             </Button>
-            <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow">
-              افزودن دستگاه
-              <ScanLine />
+            <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow flex items-center gap-1">
+              افزودن دستگاه <ScanLine />
             </Button>
           </div>
         }
-        style="w-full"
+        className="w-full"
       >
-        <div className="lg:grid lg:grid-cols-2 2xl:grid-cols-3 space-y-2.5 gap-3">
+        <div className="lg:grid lg:grid-cols-2 2xl:grid-cols-3 gap-3">
           {devices.map((device) => (
             <DeviceCard
               key={device.device_id}
               name={device.device_name}
               battery={device.battery_level}
               rssi={device.rssi}
-              last_seen={device.last_seen}
+              last_seen={new Date(device.last_seen).toLocaleString()} // فرمت تاریخ
               status={device.status}
               type={device.type}
               id={device.device_id}

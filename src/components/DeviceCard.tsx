@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardAction,
@@ -17,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "./ui/badge";
-import { Cpu, MoreHorizontal, Server, Trash2Icon, Wifi } from "lucide-react";
+import { Cpu, MoreHorizontal, Server, Trash2Icon } from "lucide-react";
 import BatteryStatus from "./BatteryStatus";
 import { RSSIStatus } from "./RssiStatus";
 
@@ -30,6 +31,7 @@ interface DeviceCardProps {
   rssi: number;
   last_seen: string;
   status: boolean;
+  power?: boolean;
 }
 
 export default function DeviceCard({
@@ -41,7 +43,33 @@ export default function DeviceCard({
   rssi,
   last_seen,
   status,
+  power = false,
 }: DeviceCardProps) {
+  const [isPowerOn, setIsPowerOn] = useState(power);
+  const [loading, setLoading] = useState(false);
+
+  // شبیه‌سازی تغییر وضعیت سرور
+  const simulateServerToggle = (newState: boolean) => {
+    setLoading(true);
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setLoading(false);
+        resolve();
+      }, 600); // شبیه‌سازی 600ms تاخیر
+    });
+  };
+
+  const handlePowerToggle = async () => {
+    const newState = !isPowerOn;
+    setIsPowerOn(newState); // اپتیمیسیتک آپدیت UI
+    try {
+      await simulateServerToggle(newState);
+    } catch (err) {
+      setIsPowerOn(!newState); // در صورت خطا بازگردانی
+      console.error("Simulated toggle failed:", err);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -56,11 +84,11 @@ export default function DeviceCard({
                 آنلاین
               </Badge>
             ) : (
-              <Badge variant="destructive" className="ml-2 my-1.5=">
+              <Badge variant="destructive" className="ml-2 my-1.5">
                 آفلاین
               </Badge>
             )}
-            <span className="text-muted-foreground text-sm">dev-{id}</span>
+            <span className="text-muted-foreground text-sm ml-2">dev-{id}</span>
           </CardDescription>
         </div>
 
@@ -104,11 +132,15 @@ export default function DeviceCard({
       </CardContent>
 
       <CardFooter>
-        <div className="md:flex justify-between w-full items-center text-sm space-y-2.5 ">
+        <div className="md:flex justify-between w-full items-center text-sm">
           <p>آخرین مشاهده: {last_seen}</p>
-          <div className="flex items-center gap-2 ">
+          <div className="flex items-center gap-2">
             <p>قدرت</p>
-            <Switch />
+            <Switch
+              checked={isPowerOn}
+              onCheckedChange={handlePowerToggle}
+              disabled={loading}
+            />
           </div>
         </div>
       </CardFooter>
