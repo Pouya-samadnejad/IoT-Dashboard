@@ -11,7 +11,7 @@ export default function Overview() {
           <InfoCard
             title="تله متری محیط"
             description="دما و رطوبت آخرین ۵۰ نمونه"
-            style="w-full"
+            className="w-full"
           >
             <TempChart />
           </InfoCard>
