@@ -40,7 +40,7 @@ export default function Dashboard() {
   ];
   return (
     <main className="p-4">
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 justify-center mb-3">
         {items.map((item) => (
           <InfoCard
             key={item.title}
@@ -49,7 +49,7 @@ export default function Dashboard() {
             online={item.online}
             valueColor={item.valueColor}
             footer={`به‌روزشده: ${item.updated}`}
-            style="w-60"
+            style="lg:w-60 md:w-70 w-full"
           >
             <div className="text-3xl font-bold">{item.value}</div>
           </InfoCard>

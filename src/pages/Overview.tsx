@@ -5,9 +5,9 @@ import { TraficChart } from "@/components/TraficChart";
 
 export default function Overview() {
   return (
-    <main>
-      <div className="flex gap-2">
-        <div className="w-2/3">
+    <main className="p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2 ">
           <InfoCard
             title="تله متری محیط"
             description="دما و رطوبت آخرین ۵۰ نمونه"
@@ -16,13 +16,14 @@ export default function Overview() {
             <TempChart />
           </InfoCard>
         </div>
-        <div className="w-1/3">
+        <div>
           <InfoCard title="ترافیک شبکه" description="پیام دقیقه">
             <TraficChart />
           </InfoCard>
         </div>
       </div>
-      <div className="w-full">
+
+      <div className="mt-4">
         <MqttSection />
       </div>
     </main>

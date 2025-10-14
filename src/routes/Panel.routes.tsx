@@ -1,4 +1,3 @@
-import Loading from "@/components/Loading";
 import { Skeleton } from "@/components/ui/skeleton";
 import PanelLayout from "@/layout/PanelLayout";
 import { lazy, Suspense } from "react";

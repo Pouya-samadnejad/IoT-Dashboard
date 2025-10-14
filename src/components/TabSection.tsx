@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Devices from "@/pages/Devices";
 import Overview from "@/pages/Overview";
 
 export default function TabSection() {
@@ -13,6 +14,10 @@ export default function TabSection() {
       <TabsContent value="overview">
         <Overview />
       </TabsContent>
+      <TabsContent value="devices">
+        <Devices />
+      </TabsContent>
+
       <TabsContent value="password"></TabsContent>
       <TabsContent value="settings">Manage your settings here.</TabsContent>
     </Tabs>

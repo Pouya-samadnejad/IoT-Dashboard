@@ -41,25 +41,24 @@ export default function InfoCard({
   }[valueColor];
 
   return (
-    <Card className={`my-4 ${style}`}>
+    <Card className={` ${style}`}>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {icon}
-            <CardTitle>{title}</CardTitle>
-          </div>
-          {action ? (
-            <CardAction>{action}</CardAction>
-          ) : online !== undefined ? (
-            <CardAction>
-              <Badge variant="outline" className="text-sm">
-                <span className="bg-green-600 w-3 h-3 rounded-full inline-block mr-1"></span>
-                {online}
-              </Badge>
-            </CardAction>
-          ) : null}
+        <div className="flex items-center gap-1">
+          {icon}
+          <CardTitle>{title}</CardTitle>
         </div>
+
         {description && <CardDescription>{description}</CardDescription>}
+        {action ? (
+          <CardAction>{action}</CardAction>
+        ) : online !== undefined ? (
+          <CardAction>
+            <Badge variant="outline" className="text-sm">
+              <span className="bg-green-600 w-3 h-3 rounded-full inline-block mr-1"></span>
+              {online}
+            </Badge>
+          </CardAction>
+        ) : null}
       </CardHeader>
 
       <CardContent className={valueColor ? valueColorClass : ""}>
