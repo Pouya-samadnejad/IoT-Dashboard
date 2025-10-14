@@ -77,7 +77,6 @@ export default function Devices() {
             </Button>
           </div>
         }
-        className="w-full"
       >
         <div className="lg:grid lg:grid-cols-2 2xl:grid-cols-3 gap-3">
           {devices.map((device) => (

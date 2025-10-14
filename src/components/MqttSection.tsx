@@ -52,7 +52,7 @@ export default function MqttSectionDemo() {
       <InfoCard
         title=" MQTT اتصال "
         description="WebSocket حالت نمایشی"
-        style="w-2/3"
+        className="w-2/3"
       >
         <div className="mb-5">
           {connected ? (
@@ -108,7 +108,7 @@ export default function MqttSectionDemo() {
               key={item.title}
               title={item.title}
               icon={<item.icon />}
-              style="w-full"
+              className="w-full"
             >
               {item.value}
             </InfoCard>
@@ -117,7 +117,11 @@ export default function MqttSectionDemo() {
         <Toaster position="top-center" richColors />
       </InfoCard>
 
-      <InfoCard title="فعالیت اخیر" description="آخرین رویدادها" style="w-1/3">
+      <InfoCard
+        title="فعالیت اخیر"
+        description="آخرین رویدادها"
+        className="w-1/3"
+      >
         <ScrollAreaSection messages={messages} />
       </InfoCard>
     </main>

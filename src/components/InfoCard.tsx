@@ -19,7 +19,7 @@ interface InfoCardProps {
   action?: ReactNode;
   online?: number;
   valueColor?: string;
-  style?: string;
+  className?: string;
 }
 
 export default function InfoCard({
@@ -31,7 +31,7 @@ export default function InfoCard({
   action,
   online,
   valueColor = "default",
-  style = "",
+  className = "",
 }: InfoCardProps) {
   const valueColorClass = {
     default: "text-foreground",
@@ -41,7 +41,7 @@ export default function InfoCard({
   }[valueColor];
 
   return (
-    <Card className={` ${style}`}>
+    <Card className={className}>
       <CardHeader>
         <div className="flex items-center gap-1">
           {icon}
@@ -49,21 +49,21 @@ export default function InfoCard({
         </div>
 
         {description && <CardDescription>{description}</CardDescription>}
-        {action ? (
-          <CardAction>{action}</CardAction>
-        ) : online !== undefined ? (
-          <CardAction>
-            <Badge variant="outline" className="text-sm">
-              <span className="bg-green-600 w-3 h-3 rounded-full inline-block mr-1"></span>
-              {online}
-            </Badge>
-          </CardAction>
-        ) : null}
+
+        {action ||
+          (online !== undefined && (
+            <CardAction>
+              <Badge variant="outline" className="text-sm">
+                <span
+                  className={`w-3 h-3 rounded-full inline-block mr-1 bg-green-600`}
+                ></span>
+                {online}
+              </Badge>
+            </CardAction>
+          ))}
       </CardHeader>
 
-      <CardContent className={valueColor ? valueColorClass : ""}>
-        {children}
-      </CardContent>
+      <CardContent className={valueColorClass}>{children}</CardContent>
 
       {footer && (
         <CardFooter className="text-xs text-muted-foreground">

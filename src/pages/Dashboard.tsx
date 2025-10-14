@@ -49,7 +49,7 @@ export default function Dashboard() {
             online={item.online}
             valueColor={item.valueColor}
             footer={`به‌روزشده: ${item.updated}`}
-            style="lg:w-60 md:w-70 w-full"
+            className="lg:w-60 md:w-70 w-full"
           >
             <div className="text-3xl font-bold">{item.value}</div>
           </InfoCard>
