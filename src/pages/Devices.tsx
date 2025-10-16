@@ -1,67 +1,13 @@
 import DeviceCard from "@/components/DeviceCard";
+import DialogSection from "@/components/DialogSection";
 import InfoCard from "@/components/InfoCard";
 import { Button } from "@/components/ui/button";
+import { DialogTrigger } from "@/components/ui/dialog";
+import { useDeviceStore } from "@/store/deviceStore";
 import { Earth, ScanLine } from "lucide-react";
 
 export default function Devices() {
-  const devices = [
-    {
-      device_id: "dev-1000",
-      device_name: "Sensor 1",
-      status: true,
-      type: "Temp/Humidity",
-      firmware_version: "v2.5.4",
-      battery_level: 66,
-      rssi: 20,
-      last_seen: "2025-10-14T01:43:00Z",
-      power: true,
-    },
-    {
-      device_id: "dev-1001",
-      device_name: "Sensor 2",
-      status: true,
-      type: "Temp/Humidity",
-      firmware_version: "v2.5.4",
-      battery_level: 81,
-      rssi: 59,
-      last_seen: "2025-10-14T01:42:30Z",
-      power: true,
-    },
-    {
-      device_id: "dev-1002",
-      device_name: "Sensor 3",
-      status: false,
-      type: "Temp/Humidity",
-      firmware_version: "v2.5.3",
-      battery_level: 40,
-      rssi: 85,
-      last_seen: "2025-10-14T00:58:14Z",
-      power: false,
-    },
-    {
-      device_id: "dev-1003",
-      device_name: "Sensor 4",
-      status: true,
-      type: "Temp/Humidity",
-      firmware_version: "v2.5.5",
-      battery_level: 92,
-      rssi: 63,
-      last_seen: "2025-10-14T01:44:10Z",
-      power: true,
-    },
-    {
-      device_id: "dev-1004",
-      device_name: "Sensor 5",
-      status: true,
-      type: "Temp/Humidity",
-      firmware_version: "v2.5.4",
-      battery_level: 57,
-      rssi: 72,
-      last_seen: "2025-10-14T01:41:25Z",
-      power: true,
-    },
-  ];
-
+  const { devices } = useDeviceStore();
   return (
     <main>
       <InfoCard
@@ -72,9 +18,16 @@ export default function Devices() {
             <Button className="shadow flex items-center gap-1">
               از راه دور Provision <Earth />
             </Button>
-            <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow flex items-center gap-1">
-              افزودن دستگاه <ScanLine />
-            </Button>
+
+            <DialogSection
+              trigger={
+                <DialogTrigger>
+                  <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow flex items-center gap-1">
+                    افزودن دستگاه <ScanLine />
+                  </Button>
+                </DialogTrigger>
+              }
+            />
           </div>
         }
       >

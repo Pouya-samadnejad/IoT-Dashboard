@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import InputSection from "@/components/InputSection";
 import { Button } from "@/components/ui/button";
@@ -21,7 +19,7 @@ export default function MqttSectionDemo() {
 
   const handleSendTest = () => {
     if (!connected) {
-      toast.error("ابتدا اتصال برقرار شود ❌");
+      toast.error;
       return;
     }
     const newMsg = `پیام تست ارسال شد در ${new Date().toLocaleTimeString()}`;

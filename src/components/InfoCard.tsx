@@ -50,17 +50,16 @@ export default function InfoCard({
 
         {description && <CardDescription>{description}</CardDescription>}
 
-        {action ||
-          (online !== undefined && (
-            <CardAction>
-              <Badge variant="outline" className="text-sm">
-                <span
-                  className={`w-3 h-3 rounded-full inline-block mr-1 bg-green-600`}
-                ></span>
-                {online}
-              </Badge>
-            </CardAction>
-          ))}
+        {action ? (
+          <CardAction>{action}</CardAction>
+        ) : online !== undefined ? (
+          <CardAction>
+            <Badge variant="outline" className="text-sm">
+              <span className="bg-green-600 w-3 h-3 rounded-full inline-block mr-1"></span>
+              {online}
+            </Badge>
+          </CardAction>
+        ) : null}
       </CardHeader>
 
       <CardContent className={valueColorClass}>{children}</CardContent>

@@ -18,9 +18,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "./ui/badge";
-import { Cpu, MoreHorizontal, Server, Trash2Icon } from "lucide-react";
+import { Cpu, MoreHorizontal, PenBox, Server, Trash2Icon } from "lucide-react";
 import BatteryStatus from "./BatteryStatus";
 import { RSSIStatus } from "./RssiStatus";
+import { useDeviceStore } from "@/store/deviceStore";
+import DialogSection from "@/components/DialogSection";
 
 interface DeviceCardProps {
   name: string;
@@ -47,6 +49,7 @@ export default function DeviceCard({
 }: DeviceCardProps) {
   const [isPowerOn, setIsPowerOn] = useState(power);
   const [loading, setLoading] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   // شبیه‌سازی تغییر وضعیت سرور
   const simulateServerToggle = (newState: boolean) => {
@@ -69,6 +72,8 @@ export default function DeviceCard({
       console.error("Simulated toggle failed:", err);
     }
   };
+
+  const { deleteDevice } = useDeviceStore();
 
   return (
     <Card>
@@ -102,8 +107,15 @@ export default function DeviceCard({
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
-                <Trash2Icon className="w-4 h-4 mr-2" />
+              <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setIsEditOpen(true); }}>
+                <PenBox className="w-4 h-4 "/>
+                ویرایش
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="text-destructive focus:text-destructive"
+                onClick={() => deleteDevice(id)}
+              >
+                <Trash2Icon className="w-4 h-4 " />
                 حذف
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -144,6 +156,21 @@ export default function DeviceCard({
           </div>
         </div>
       </CardFooter>
+      <DialogSection
+        open={isEditOpen}
+        onOpenChange={setIsEditOpen}
+        device={{
+          device_id: id,
+          device_name: name,
+          status,
+          type,
+          firmware_version: version,
+          battery_level: battery,
+          rssi,
+          last_seen,
+          power: power ?? false,
+        }}
+      />
     </Card>
   );
 }
