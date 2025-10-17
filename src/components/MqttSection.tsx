@@ -9,7 +9,7 @@ import { ScrollAreaSection } from "./ui/ScrollAreaSection";
 
 export default function MqttSectionDemo() {
   const [connected, setConnected] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<string[]>([]);
 
   const handleConnect = () => {
     setConnected(true);
@@ -19,11 +19,11 @@ export default function MqttSectionDemo() {
 
   const handleSendTest = () => {
     if (!connected) {
-      toast.error;
+      toast.error("ابتدا اتصال برقرار کنید");
       return;
     }
     const newMsg = `پیام تست ارسال شد در ${new Date().toLocaleTimeString()}`;
-    setMessages([...messages, newMsg]);
+    setMessages((prev) => [...prev, newMsg]);
     toast(newMsg);
   };
 

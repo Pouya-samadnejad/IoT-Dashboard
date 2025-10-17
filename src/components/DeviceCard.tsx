@@ -52,7 +52,7 @@ export default function DeviceCard({
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   // شبیه‌سازی تغییر وضعیت سرور
-  const simulateServerToggle = (newState: boolean) => {
+  const simulateServerToggle = () => {
     setLoading(true);
     return new Promise<void>((resolve) => {
       setTimeout(() => {
@@ -66,7 +66,7 @@ export default function DeviceCard({
     const newState = !isPowerOn;
     setIsPowerOn(newState); // اپتیمیسیتک آپدیت UI
     try {
-      await simulateServerToggle(newState);
+      await simulateServerToggle();
     } catch (err) {
       setIsPowerOn(!newState); // در صورت خطا بازگردانی
       console.error("Simulated toggle failed:", err);
