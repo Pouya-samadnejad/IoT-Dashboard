@@ -1,5 +1,6 @@
 import DeviceCard from "@/components/DeviceCard";
 import DialogSection from "@/components/DialogSection";
+import DeviceForm from "@/components/DeviceForm";
 import InfoCard from "@/components/InfoCard";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
@@ -27,7 +28,11 @@ export default function Devices() {
                   </Button>
                 </DialogTrigger>
               }
-            />
+              title="افزودن دستگاه جدید"
+              description="اطلاعات دستگاه جدید را وارد کنید"
+            >
+              <DeviceForm />
+            </DialogSection>
           </div>
         }
       >

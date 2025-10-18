@@ -18,11 +18,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 import { Cpu, MoreHorizontal, PenBox, Server, Trash2Icon } from "lucide-react";
 import BatteryStatus from "./BatteryStatus";
 import { RSSIStatus } from "./RssiStatus";
 import { useDeviceStore } from "@/store/deviceStore";
 import DialogSection from "@/components/DialogSection";
+import DeviceForm from "@/components/DeviceForm";
 
 interface DeviceCardProps {
   name: string;
@@ -50,6 +52,7 @@ export default function DeviceCard({
   const [isPowerOn, setIsPowerOn] = useState(power);
   const [loading, setLoading] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   // شبیه‌سازی تغییر وضعیت سرور
   const simulateServerToggle = () => {
@@ -113,7 +116,7 @@ export default function DeviceCard({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive focus:text-destructive"
-                onClick={() => deleteDevice(id)}
+                onSelect={(e) => { e.preventDefault(); setIsDeleteOpen(true); }}
               >
                 <Trash2Icon className="w-4 h-4 " />
                 حذف
@@ -159,18 +162,59 @@ export default function DeviceCard({
       <DialogSection
         open={isEditOpen}
         onOpenChange={setIsEditOpen}
-        device={{
-          device_id: id,
-          device_name: name,
-          status,
-          type,
-          firmware_version: version,
-          battery_level: battery,
-          rssi,
-          last_seen,
-          power: power ?? false,
-        }}
-      />
+        title="ویرایش دستگاه"
+        description="اطلاعات دستگاه را ویرایش کنید"
+      >
+        <DeviceForm
+          device={{
+            device_id: id,
+            device_name: name,
+            status,
+            type,
+            firmware_version: version,
+            battery_level: battery,
+            rssi,
+            last_seen,
+            power: power ?? false,
+          }}
+          onSubmitSuccess={() => setIsEditOpen(false)}
+        />
+      </DialogSection>
+
+      {/* Delete Confirmation Dialog */}
+      <DialogSection
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="حذف دستگاه"
+        description="آیا از حذف این دستگاه اطمینان دارید؟"
+      >
+        <div className="mt-4 space-y-4">
+          <div className="p-4 bg-muted rounded-lg">
+            <p className="font-medium">{name}</p>
+            <p className="text-sm text-muted-foreground">dev-{id}</p>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            این عملیات غیرقابل بازگشت است و تمام اطلاعات دستگاه حذف خواهد شد.
+          </p>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteOpen(false)}
+            >
+              انصراف
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                deleteDevice(id);
+                setIsDeleteOpen(false);
+              }}
+            >
+              حذف دستگاه
+            </Button>
+          </div>
+        </div>
+      </DialogSection>
     </Card>
   );
 }
