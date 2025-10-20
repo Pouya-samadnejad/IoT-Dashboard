@@ -25,7 +25,6 @@ import { RSSIStatus } from "./RssiStatus";
 import { useDeviceStore } from "@/store/deviceStore";
 import DialogSection from "@/components/DialogSection";
 import DeviceForm from "@/components/DeviceForm";
-import { AnimatePresence, motion } from "motion/react";
 
 interface DeviceCardProps {
   name: string;
@@ -80,7 +79,7 @@ export default function DeviceCard({
   const { deleteDevice } = useDeviceStore();
 
   return (
-    <Card className="animate-in fade-in zoom-in-95 duration-300">
+    <Card className="animate-in fade-in zoom-in-95 duration-300 my-3 lg:my-0">
       <CardHeader>
         <div>
           <CardTitle>{name}</CardTitle>
