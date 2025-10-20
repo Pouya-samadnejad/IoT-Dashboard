@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Devices from "@/pages/Devices";
 import Overview from "@/pages/Overview";
 import WarningList from "@/pages/WarningList";
-
+import Settings from "@/pages/Settings";
 export default function TabSection() {
   return (
     <Tabs defaultValue="account" className="w-full">
@@ -15,13 +15,15 @@ export default function TabSection() {
       <TabsContent value="overview">
         <Overview />
       </TabsContent>
-        <TabsContent value="devices">
-          <Devices />
-        </TabsContent>
-        <TabsContent value="alerts">
-          <WarningList/>
-        </TabsContent>
-      <TabsContent value="settings">Manage your settings here.</TabsContent>
+      <TabsContent value="devices">
+        <Devices />
+      </TabsContent>
+      <TabsContent value="alerts">
+        <WarningList />
+      </TabsContent>
+      <TabsContent value="settings">
+        <Settings />
+      </TabsContent>
     </Tabs>
   );
 }

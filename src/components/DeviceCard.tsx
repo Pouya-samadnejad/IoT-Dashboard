@@ -96,7 +96,7 @@ export default function DeviceCard({
                 آفلاین
               </Badge>
             )}
-            <span className="text-muted-foreground text-sm ml-2">dev-{id}</span>
+            <span className="text-muted-foreground text-sm ml-2">{id}</span>
           </CardDescription>
         </div>
 
@@ -110,13 +110,21 @@ export default function DeviceCard({
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setIsEditOpen(true); }}>
-                <PenBox className="w-4 h-4 "/>
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setIsEditOpen(true);
+                }}
+              >
+                <PenBox className="w-4 h-4 " />
                 ویرایش
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="text-destructive focus:text-destructive"
-                onSelect={(e) => { e.preventDefault(); setIsDeleteOpen(true); }}
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setIsDeleteOpen(true);
+                }}
               >
                 <Trash2Icon className="w-4 h-4 " />
                 حذف
@@ -197,10 +205,7 @@ export default function DeviceCard({
             این عملیات غیرقابل بازگشت است و تمام اطلاعات دستگاه حذف خواهد شد.
           </p>
           <div className="flex justify-end gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
               انصراف
             </Button>
             <Button
