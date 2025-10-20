@@ -41,7 +41,9 @@ export default function InfoCard({
   }[valueColor];
 
   return (
-    <Card className={className}>
+    <Card
+      className={`animate-in fade-in slide-in-from-bottom-5 duration-300 ${className}`}
+    >
       <CardHeader>
         <div className="flex items-center gap-1">
           {icon}
