@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "motion/react";
 import { Badge } from "./ui/badge";
 import { Card, CardDescription } from "./ui/card";
 
@@ -36,17 +37,27 @@ export default function WarningCard({
   };
 
   return (
-    <Card className="px-4 py-2 my-2 ">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          {badge(severity)}
-          <p>{title}</p>
-        </div>
-        <div>
-          <span>{time}</span>
-        </div>
-      </div>
-      <CardDescription>{description}</CardDescription>
-    </Card>
+    <AnimatePresence mode="popLayout">
+      <motion.div
+        key={title} // هر کارت باید key منحصربه‌فرد داشته باشه
+        initial={{ opacity: 0, x: 100 }} // شروع از راست
+        animate={{ opacity: 1, x: 0 }} // حرکت به موقعیت اصلی
+        exit={{ opacity: 0, x: -100 }} // خروج به سمت چپ (اختیاری)
+        transition={{ duration: 0.4, ease: "easeOut" }} // نرمی انیمیشن
+      >
+        <Card className="px-4 py-2 my-2">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              {badge(severity)}
+              <p>{title}</p>
+            </div>
+            <div>
+              <span>{time}</span>
+            </div>
+          </div>
+          <CardDescription>{description}</CardDescription>
+        </Card>
+      </motion.div>
+    </AnimatePresence>
   );
 }

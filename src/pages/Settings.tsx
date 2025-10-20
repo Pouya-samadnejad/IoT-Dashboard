@@ -25,8 +25,12 @@ export default function Settings() {
           </InfoCard>
         </div>
         <div>
-          <div>
-            <InfoCard title="سلامت سامانه" description="برآورد منابع">
+          <div className="h-full">
+            <InfoCard
+              title="سلامت سامانه"
+              description="برآورد منابع"
+              className="h-full"
+            >
               <SourceUsageBar
                 name="Cpu"
                 icon={<Cpu className="w-5 h-5" />}
