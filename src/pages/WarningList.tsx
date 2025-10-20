@@ -3,7 +3,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import WarningCard from "@/components/WarningCard";
 import { useState, useEffect } from "react";
 
-// تابع ساده برای تولید هشدار تصادفی
 function randInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -54,7 +53,7 @@ export default function WarningList() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newCount = randInt(3, 10); // تعداد هشدارها تصادفی
+      const newCount = randInt(3, 10);
       setWarningData(generateAlerts(newCount));
     }, 60000);
 
@@ -62,7 +61,7 @@ export default function WarningList() {
   }, []);
 
   const sortedAlert = [...warningData].sort(
-    (a, b) => severityOrder[a.severity] - severityOrder[b.severity],
+    (a, b) => severityOrder[a.severity] - severityOrder[b.severity]
   );
 
   return (
