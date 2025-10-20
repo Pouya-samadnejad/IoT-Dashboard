@@ -3,6 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import WarningCard from "@/components/WarningCard";
 import { useState, useEffect } from "react";
 
+// تابع ساده برای تولید هشدار تصادفی
 function randInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -38,7 +39,7 @@ function generateAlerts(count = 5) {
       time: formatTimeOffset(minutesAgo),
       description: `اخیراً پاسخ نداده است ${id} - شناسه`,
       count: nSensors,
-    };
+    } as const;
   });
 }
 
@@ -53,11 +54,29 @@ export default function WarningList() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const newCount = randInt(3, 10);
-      setWarningData(generateAlerts(newCount));
-    }, 60000);
+      const newCount = randInt(1, 5);
+      const newAlerts = generateAlerts(newCount);
 
-    return () => clearInterval(interval); // cleanup
+      setWarningData((prev) => {
+        const merged = [...newAlerts, ...prev];
+
+        const seen = new Set<string>();
+        const dedup: typeof merged = [];
+        for (const a of merged) {
+          if (!seen.has(a.id)) {
+            seen.add(a.id);
+            dedup.push(a);
+          }
+        }
+
+        const MAX_ITEMS = 50;
+        const limited = dedup.slice(0, MAX_ITEMS);
+
+        return limited;
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const sortedAlert = [...warningData].sort(
