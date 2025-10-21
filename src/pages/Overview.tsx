@@ -2,10 +2,11 @@ import InfoCard from "@/components/InfoCard";
 import MqttSection from "@/components/MqttSection";
 import { TempChart } from "@/components/TempChart";
 import { TraficChart } from "@/components/TraficChart";
+import { ScrollAreaSection } from "@/components/ui/ScrollAreaSection";
 
 export default function Overview() {
   return (
-    <main className="p-4">
+    <main>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2 ">
           <InfoCard
@@ -16,15 +17,23 @@ export default function Overview() {
             <TempChart />
           </InfoCard>
         </div>
-        <div>
+        <div className="h-full">
           <InfoCard title="ترافیک شبکه" description="پیام دقیقه">
             <TraficChart />
           </InfoCard>
         </div>
       </div>
-
-      <div className="mt-4">
-        <MqttSection />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
+        <div className="lg:col-span-2 ">
+          <InfoCard title=" MQTT اتصال " description="WebSocket حالت نمایشی">
+            <MqttSection />
+          </InfoCard>
+        </div>
+        <div className="h-full">
+          <InfoCard title="فعالیت اخیر" description="آخرین رویدادها" className="h-full">
+            <ScrollAreaSection />
+          </InfoCard>
+        </div>
       </div>
     </main>
   );

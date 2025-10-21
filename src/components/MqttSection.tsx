@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import InputSection from "@/components/InputSection";
 import { Button } from "@/components/ui/button";
@@ -5,7 +7,6 @@ import { Cpu, Gauge, ShieldCheck } from "lucide-react";
 import InfoCard from "./InfoCard";
 import { Toaster, toast } from "sonner";
 import { Badge } from "./ui/badge";
-import { ScrollAreaSection } from "./ui/ScrollAreaSection";
 
 export default function MqttSectionDemo() {
   const [connected, setConnected] = useState(false);
@@ -19,11 +20,11 @@ export default function MqttSectionDemo() {
 
   const handleSendTest = () => {
     if (!connected) {
-      toast.error("ابتدا اتصال برقرار کنید");
+      toast.error("ابتدا اتصال برقرار شود ❌");
       return;
     }
     const newMsg = `پیام تست ارسال شد در ${new Date().toLocaleTimeString()}`;
-    setMessages((prev) => [...prev, newMsg]);
+    setMessages([...messages, newMsg]);
     toast(newMsg);
   };
 
@@ -46,82 +47,60 @@ export default function MqttSectionDemo() {
   ];
 
   return (
-    <main className="flex justify-between items-center gap-2 ">
-      <InfoCard
-        title=" MQTT اتصال "
-        description="WebSocket حالت نمایشی"
-        className="w-2/3"
-      >
-        <div className="mb-5">
-          {connected ? (
-            <Badge
-              variant="secondary"
-              className="bg-green-600 text-white font-bold"
-            >
-              Connected
-            </Badge>
-          ) : (
-            <Badge variant="destructive" className="font-bold">
-              Disconnected
-            </Badge>
-          )}
-        </div>
+    <main className="space-y-5">
+      <div>
+        {connected ? (
+          <Badge
+            variant="secondary"
+            className="bg-green-600 text-white font-bold"
+          >
+            Connected
+          </Badge>
+        ) : (
+          <Badge variant="destructive" className="font-bold">
+            Disconnected
+          </Badge>
+        )}
+      </div>
 
-        {/* ورودی‌ها */}
-        <div className="flex items-center justify-between gap-2">
-          <InputSection
-            type="text"
-            label="Broker (WSS)"
-            placeholder="wss://broker.example"
-          />
-          <InputSection
-            type="text"
-            label="Client ID"
-            placeholder="iot-ui-3223"
-          />
-          <InputSection type="text" label="Username" placeholder="demo" />
-        </div>
+      {/* ورودی‌ها */}
+      <div className="flex items-center justify-between gap-2">
+        <InputSection
+          type="text"
+          label="Broker (WSS)"
+          placeholder="wss://broker.example"
+        />
+        <InputSection type="text" label="Client ID" placeholder="iot-ui-3223" />
+        <InputSection type="text" label="Username" placeholder="demo" />
+      </div>
 
-        <div className="flex justify-between gap-2">
-          <InputSection
-            type="password"
-            label="Password"
-            placeholder="Password"
-          />
-          <div className="flex items-center mt-3 gap-2">
-            <Button onClick={handleConnect}>اتصال</Button>
-            <Button
-              className="bg-neutral-200 text-black hover:bg-neutral-300"
-              onClick={handleSendTest}
-            >
-              ارسال تست
-            </Button>
-          </div>
+      <div className="flex justify-between gap-2">
+        <InputSection type="password" label="Password" placeholder="Password" />
+        <div className="flex items-center mt-3 gap-2">
+          <Button onClick={handleConnect}>اتصال</Button>
+          <Button
+            className="bg-neutral-200 text-black hover:bg-neutral-300"
+            onClick={handleSendTest}
+          >
+            ارسال تست
+          </Button>
         </div>
+      </div>
 
-        {/* وضعیت کارت‌ها */}
-        <div className="flex justify-between gap-2">
-          {items.map((item) => (
-            <InfoCard
-              key={item.title}
-              title={item.title}
-              icon={<item.icon />}
-              className="w-full"
-            >
-              {item.value}
-            </InfoCard>
-          ))}
-        </div>
-        <Toaster position="top-center" richColors />
-      </InfoCard>
-
-      <InfoCard
-        title="فعالیت اخیر"
-        description="آخرین رویدادها"
-        className="w-1/3"
-      >
-        <ScrollAreaSection messages={messages} />
-      </InfoCard>
+      {/* وضعیت کارت‌ها */}
+      <div className="flex justify-between gap-2">
+        {items.map((item) => (
+          <InfoCard
+            key={item.title}
+            title={item.title}
+            icon={<item.icon />}
+            className="w-full"
+          >
+            {item.value}
+          </InfoCard>
+        ))}
+      </div>
+      <Toaster position="top-center" richColors />
     </main>
   );
 }
