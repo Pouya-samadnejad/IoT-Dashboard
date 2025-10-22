@@ -1,28 +1,54 @@
 import { useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Bell, Moon, Sun, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { SidebarTrigger } from "./ui/sidebar";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Popover, PopoverContent } from "./ui/popover";
+import { useSearchParams } from "react-router-dom";
 
 export default function DashboardHeader() {
-  const [theme, setTheme] = useState<"light" | "dark">(()=>{
-    const savedTheme =localStorage.getItem('theme') as 'light' | 'dark';
-    if(savedTheme){
-      return savedTheme
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark";
+    if (savedTheme) {
+      return savedTheme;
     }
-    return window.matchMedia('(prefers-color-scheme:dark').matches? 'dark':'light';
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const initialQuery = searchParams.get("q") ?? "";
+  const [query, setQuery] = useState(initialQuery);
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setQuery(value);
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev);
+      if (value.trim()) {
+        params.set("q", value.trim());
+      } else {
+        params.delete("q");
+      }
+      return params;
+    });
+  };
+  
   useEffect(() => {
-    const root = window.document.documentElement;
+    setQuery(searchParams.get("q") ?? "");
+  }, [searchParams]);
+
+  useEffect(() => {
+    const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-    localStorage.setItem('theme', theme)
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
@@ -68,6 +94,9 @@ export default function DashboardHeader() {
           type="text"
           placeholder="جستجو دستگاه / نوع / شناسه"
           className="pl-8 text-right placeholder:text-muted-foreground"
+          value={query}
+          onChange={handleSearchChange}
+          aria-label="Search devices"
         />
       </div>
     </header>

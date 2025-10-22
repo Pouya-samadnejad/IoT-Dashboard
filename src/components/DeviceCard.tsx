@@ -67,11 +67,11 @@ export default function DeviceCard({
 
   const handlePowerToggle = async () => {
     const newState = !isPowerOn;
-    setIsPowerOn(newState); // اپتیمیسیتک آپدیت UI
+    setIsPowerOn(newState); 
     try {
       await simulateServerToggle();
     } catch (err) {
-      setIsPowerOn(!newState); // در صورت خطا بازگردانی
+      setIsPowerOn(!newState); 
       console.error("Simulated toggle failed:", err);
     }
   };

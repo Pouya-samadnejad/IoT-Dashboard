@@ -6,9 +6,28 @@ import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { useDeviceStore } from "@/store/deviceStore";
 import { Earth, ScanLine } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from "react";
 
 export default function Devices() {
   const { devices } = useDeviceStore();
+  const [searchParams]=useSearchParams();
+  const q =(searchParams.get('q')??"").trim().toLowerCase();
+
+  const filteredDevices= useMemo(()=>{
+    if(!q) return devices;
+
+    return devices.filter((d)=>{
+      const id = String(d.device_id??"").toLocaleLowerCase();
+      const name= String(d.device_name??"").toLocaleLowerCase();
+      const type =String(d.type??"").toLocaleLowerCase();
+      return (
+        id.includes(q) ||
+        name.includes(q) ||
+        type.includes(q)
+      );
+    })
+  },[devices,q])
   return (
     <main>
       <InfoCard
@@ -37,7 +56,7 @@ export default function Devices() {
         }
       >
         <div className="lg:grid lg:grid-cols-2 2xl:grid-cols-3 gap-3">
-          {devices.map((device) => (
+          {filteredDevices.map((device) => (
             <DeviceCard
               key={device.device_id}
               name={device.device_name}
