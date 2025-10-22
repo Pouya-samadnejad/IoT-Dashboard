@@ -1,4 +1,4 @@
-import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   InputGroup,
@@ -14,6 +14,13 @@ import { toast } from "sonner";
 
 export default function SettingsForm() {
   const [text, setText] = useState("");
+  const [errors, setErrors] = useState({
+    organisation: "",
+    domain: "",
+    webhook: "",
+    password: "",
+    explanation: ""
+  });
 
   async function handleCopy() {
     if (!text.trim()) {
@@ -39,20 +46,58 @@ export default function SettingsForm() {
     return result;
   };
 
+  const validateField = (name: string, value: string) => {
+    let error = "";
+    
+    switch (name) {
+      case "organisation":
+        if (!value.trim()) error = "نام سازمان الزامی است";
+        else if (value.length < 2) error = "نام سازمان باید حداقل ۲ کاراکتر باشد";
+        break;
+      case "domain":
+        if (!value.trim()) error = "دامنه الزامی است";
+        else if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) error = "فرمت دامنه صحیح نیست";
+        break;
+      case "webhook":
+        if (!value.trim()) error = "Webhook الزامی است";
+        else if (!/^https?:\/\/.+/.test(value)) error = "Webhook باید با http یا https شروع شود";
+        break;
+      case "password":
+        if (!value.trim()) error = "API کلید الزامی است";
+        else if (value.length < 8) error = "API کلید باید حداقل ۸ کاراکتر باشد";
+        break;
+      case "explanation":
+        if (value.length > 500) error = "توضیحات نباید بیش از ۵۰۰ کاراکتر باشد";
+        break;
+    }
+    
+    setErrors(prev => ({ ...prev, [name]: error }));
+    return error === "";
+  };
+
   function handleSubmite(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-
     const data = Object.fromEntries(formData.entries());
-    console.log("🧾 داده‌های فرم:", data);
 
+    // Validate all fields
+    const isValid = Object.entries(data).every(([key, value]) => 
+      validateField(key, value as string)
+    );
+
+    if (!isValid) {
+      toast.error("لطفاً خطاهای فرم را برطرف کنید");
+      return;
+    }
+
+    console.log("🧾 داده‌های فرم:", data);
     toast.loading("در حال ارسال اطلاعات...");
 
     setTimeout(() => {
       toast.dismiss();
-      toast.success("اطلاعات با موفقیت ثبت شد ");
+      toast.success("اطلاعات با موفقیت ثبت شد");
       console.log("Form Data:", JSON.stringify(data, null, 2));
     }, 1500);
   }
@@ -69,7 +114,13 @@ export default function SettingsForm() {
                 name="organisation"
                 type="text"
                 placeholder="Nimbus Labs"
+                required
+               
+                className={errors.organisation ? "border-red-500" : ""}
               />
+              {errors.organisation && (
+                <FieldError>{errors.organisation}</FieldError>
+              )}
             </Field>
             <Field>
               <FieldLabel htmlFor="domain">دامنه سفارشی</FieldLabel>
@@ -78,7 +129,12 @@ export default function SettingsForm() {
                 name="domain"
                 type="text"
                 placeholder="iot.example.com"
+                required
+                className={errors.domain ? "border-red-500" : ""}
               />
+              {errors.domain && (
+                <FieldError>{errors.domain}</FieldError>
+              )}
             </Field>
           </div>
           <Field>
@@ -88,16 +144,26 @@ export default function SettingsForm() {
               type="text"
               name="webhook"
               placeholder="https://api.example.com/hooks/iot"
+              required
+              className={errors.webhook ? "border-red-500" : ""}
             />
+            {errors.webhook && (
+              <FieldError>{errors.webhook}</FieldError>
+            )}
           </Field>
           <Field className="flex">
-            <FieldLabel htmlFor="webhook">API کلید</FieldLabel>
+            <FieldLabel htmlFor="password">API کلید</FieldLabel>
             <InputGroup>
               <InputGroupInput
                 type="password"
                 value={text}
                 name="password"
-                onChange={(e) => setText(e.target.value)}
+                onChange={(e) => {
+                  setText(e.target.value);
+                  validateField("password", e.target.value);
+                }}
+                required
+                className={errors.password ? "border-red-500" : ""}
               />
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
@@ -110,12 +176,19 @@ export default function SettingsForm() {
                 <InputGroupButton
                   className="mx-1"
                   variant="default"
-                  onClick={() => setText(generatePassword())}
+                  onClick={() => {
+                    const newPassword = generatePassword();
+                    setText(newPassword);
+                    validateField("password", newPassword);
+                  }}
                 >
                   ساخت پسورد
                 </InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
+            {errors.password && (
+              <FieldError>{errors.password}</FieldError>
+            )}
           </Field>
           <Field>
             <FieldLabel htmlFor="explanation">توضیحات</FieldLabel>
@@ -124,7 +197,11 @@ export default function SettingsForm() {
               name="explanation"
               placeholder="سیاست نگهداری داده، محدوده های هشدار و غیره"
               rows={4}
+              className={errors.explanation ? "border-red-500" : ""}
             />
+            {errors.explanation && (
+              <FieldError>{errors.explanation}</FieldError>
+            )}
           </Field>
         </FieldGroup>
       </FieldSet>
