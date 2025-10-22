@@ -64,7 +64,7 @@ export default function MqttSectionDemo() {
       </div>
 
       {/* ورودی‌ها */}
-      <div className="flex items-center justify-between gap-2">
+      <div className="lg:flex items-center justify-between gap-2">
         <InputSection
           type="text"
           label="Broker (WSS)"
