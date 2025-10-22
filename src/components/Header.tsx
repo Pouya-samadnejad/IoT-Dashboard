@@ -26,7 +26,7 @@ export default function DashboardHeader() {
   }, [theme]);
 
   return (
-    <header className="flex items-center justify-between gap-4 w-full py-2 px-4 border-b bg-background">
+    <header className="flex items-center justify-between gap-4 w-full py-2 px-4 border-b bg-background mb-2">
       <div className="flex items-center gap-4">
         <SidebarTrigger />
 

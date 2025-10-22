@@ -1,4 +1,4 @@
-import { Field, FieldGroup, FieldLabel, FieldSet, FieldError } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel, FieldSet, FieldError, FieldDescription } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
   InputGroup,
@@ -189,6 +189,9 @@ export default function SettingsForm() {
             {errors.password && (
               <FieldError>{errors.password}</FieldError>
             )}
+             <FieldDescription>
+              پسورد باید حداقل 8 کارکتر شمامل حروف بزرگ و کوچک عدد و کارکتر های ویژه باشد
+                </FieldDescription>
           </Field>
           <Field>
             <FieldLabel htmlFor="explanation">توضیحات</FieldLabel>
