@@ -8,6 +8,8 @@ import { useDeviceStore } from "@/store/deviceStore";
 import { Earth, ScanLine } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
+import { Toaster, toast } from "sonner";
+
 
 export default function Devices() {
   const { devices } = useDeviceStore();
@@ -35,7 +37,7 @@ export default function Devices() {
         description="کنترل سریع و وضعیت سلامت"
         action={
           <div className="md:flex gap-2 space-y-2 lg:space-y-0 items-center">
-            <Button className="shadow flex items-center gap-1">
+            <Button className="shadow flex items-center gap-1" onClick={()=>toast.success('شبیه‌سازی Provision از راه دور: دستگاه جدید شناسایی شد')}>
               از راه دور Provision <Earth />
             </Button>
 
@@ -72,6 +74,7 @@ export default function Devices() {
           ))}
         </div>
       </InfoCard>
+      <Toaster position="top-center" richColors/>
     </main>
   );
 }
