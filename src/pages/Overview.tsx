@@ -7,7 +7,7 @@ import { ScrollAreaSection } from "@/components/ui/ScrollAreaSection";
 export default function Overview() {
   return (
     <main>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4">
         <div className="lg:col-span-2 ">
           <InfoCard
             title="تله متری محیط"
@@ -23,7 +23,7 @@ export default function Overview() {
           </InfoCard>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4 lg:my-4">
         <div className="lg:col-span-2 ">
           <InfoCard title=" MQTT اتصال " description="WebSocket حالت نمایشی">
             <MqttSection />
