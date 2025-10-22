@@ -15,7 +15,7 @@ export default function Devices() {
         title="فهرست دستگاه ها"
         description="کنترل سریع و وضعیت سلامت"
         action={
-          <div className="md:flex gap-2 items-center">
+          <div className="md:flex gap-2 space-y-2 lg:space-y-0 items-center">
             <Button className="shadow flex items-center gap-1">
               از راه دور Provision <Earth />
             </Button>
@@ -23,7 +23,7 @@ export default function Devices() {
             <DialogSection
               trigger={
                 <DialogTrigger>
-                  <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow flex items-center gap-1">
+                  <Button className="bg-neutral-200 text-black hover:bg-neutral-300 shadow flex items-center  ">
                     افزودن دستگاه <ScanLine />
                   </Button>
                 </DialogTrigger>

@@ -52,7 +52,7 @@ export default function SettingsForm() {
 
     setTimeout(() => {
       toast.dismiss();
-      toast.success("اطلاعات با موفقیت ثبت شد (دمو)");
+      toast.success("اطلاعات با موفقیت ثبت شد ");
       console.log("Form Data:", JSON.stringify(data, null, 2));
     }, 1500);
   }

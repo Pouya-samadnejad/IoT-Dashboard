@@ -7,7 +7,13 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Popover, PopoverContent } from "./ui/popover";
 
 export default function DashboardHeader() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">(()=>{
+    const savedTheme =localStorage.getItem('theme') as 'light' | 'dark';
+    if(savedTheme){
+      return savedTheme
+    }
+    return window.matchMedia('(prefers-color-scheme:dark').matches? 'dark':'light';
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -16,6 +22,7 @@ export default function DashboardHeader() {
     } else {
       root.classList.remove("dark");
     }
+    localStorage.setItem('theme', theme)
   }, [theme]);
 
   return (

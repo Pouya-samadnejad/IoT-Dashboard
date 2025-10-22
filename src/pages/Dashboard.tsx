@@ -40,7 +40,7 @@ export default function Dashboard() {
   ];
   return (
     <main className="p-4">
-      <div className="flex flex-wrap gap-4 justify-center mb-3">
+      <div className="flex flex-wrap lg:gap-4 justify-center mb-3">
         {items.map((item) => (
           <InfoCard
             key={item.title}

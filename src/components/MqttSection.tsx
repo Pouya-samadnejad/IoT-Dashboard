@@ -87,8 +87,7 @@ export default function MqttSectionDemo() {
         </div>
       </div>
 
-      {/* وضعیت کارت‌ها */}
-      <div className="flex justify-between gap-2">
+      <div className="lg:flex justify-between gap-2 ">
         {items.map((item) => (
           <InfoCard
             key={item.title}

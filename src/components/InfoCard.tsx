@@ -42,7 +42,7 @@ export default function InfoCard({
 
   return (
     <Card
-      className={`animate-in fade-in slide-in-from-bottom-5 duration-300 ${className}`}
+      className={`animate-in fade-in slide-in-from-bottom-5 duration-300 my-2 lg:my-0 ${className}`}
     >
       <CardHeader>
         <div className="flex items-center gap-1">
